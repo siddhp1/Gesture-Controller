@@ -40,11 +40,13 @@ while cap.isOpened():
 
             # Make prediction
             prediction = model.predict(landmarks)
-            gesture = le.inverse_transform([np.argmax(prediction)])[0]
+            predicted_label_index = np.argmax(prediction)
+            gesture = le.inverse_transform([predicted_label_index])[0]
+            confidence = prediction[0][predicted_label_index]
 
-            # Draw landmarks and display the detected gesture
+            # Draw landmarks and display the detected gesture with confidence
             mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-            cv2.putText(frame, gesture, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+            cv2.putText(frame, f'{gesture} ({confidence:.2f})', (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
     
     # Display the frame
     cv2.imshow('Gesture Detection', frame)
