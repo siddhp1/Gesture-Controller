@@ -1,3 +1,6 @@
+# Process IDs
+*.pid
+
 # Dataset
 data/
 
