@@ -5,9 +5,9 @@ from tensorflow.keras.models import load_model
 from sklearn.preprocessing import LabelEncoder
 
 # Load the trained model and label encoder
-model = load_model("../models/HaGRID/second/model.keras")
+model = load_model("../models/HaGRID/FNN/model.keras")
 le_classes = np.load(
-    "../models/HaGRID/second/label_encoder_classes.npy", allow_pickle=True
+    "../models/HaGRID/FNN/label_encoder_classes.npy", allow_pickle=True
 )
 le = LabelEncoder()
 le.classes_ = le_classes

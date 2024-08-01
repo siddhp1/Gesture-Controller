@@ -47,7 +47,7 @@ def stop():
 
         if os.name == "nt":  # Windows
             os.kill(pid, signal.CTRL_BREAK_EVENT)
-        else:
+        else:  # Unix
             os.kill(pid, signal.SIGTERM)
 
         # Delete process file

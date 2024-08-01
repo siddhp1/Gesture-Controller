@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 import mediapipe as mp
-from tensorflow.keras.models import load_model  # Switch to TensorFlow Lite after
+import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
 
 # Other
@@ -10,7 +10,6 @@ import pyautogui
 import time
 import json
 import logging
-import math
 
 
 class GestureController:
@@ -31,10 +30,19 @@ class GestureController:
         self.gesture_start_time = None
 
     def load_resources(self):
-        # Load model and labels
-        self.model = load_model("../models/HaGRID/second/model.keras")
+        # Load TFLite model and allocate tensors
+        self.interpreter = tf.lite.Interpreter(
+            model_path="../models/HaGRID/FNN/model.tflite"
+        )
+        self.interpreter.allocate_tensors()
+
+        # Get input and output details
+        self.input_details = self.interpreter.get_input_details()
+        self.output_details = self.interpreter.get_output_details()
+
+        # Load label encoder classes
         le_classes = np.load(
-            "../models/HaGRID/second/label_encoder_classes.npy", allow_pickle=True
+            "../models/HaGRID/FNN/label_encoder_classes.npy", allow_pickle=True
         )
         self.le = LabelEncoder()
         self.le.fit(le_classes)
@@ -94,10 +102,20 @@ class GestureController:
                         for lm in hand_landmarks.landmark
                         for coord in (lm.x, lm.y, lm.z)
                     ]
-                    landmarks = np.array(landmarks).reshape(1, 21, 3)
+                    landmarks = np.array(landmarks).reshape(1, 21, 3).astype(np.float32)
 
-                    # Make prediction
-                    prediction = self.model.predict(landmarks)
+                    # Set tensor
+                    self.interpreter.set_tensor(
+                        self.input_details[0]["index"], landmarks
+                    )
+
+                    # Invoke interpreter
+                    self.interpreter.invoke()
+
+                    # Get prediction
+                    prediction = self.interpreter.get_tensor(
+                        self.output_details[0]["index"]
+                    )
                     predicted_label_index = np.argmax(prediction)
                     gesture = self.le.inverse_transform([predicted_label_index])[0]
                     confidence = prediction[0][predicted_label_index]
@@ -110,14 +128,14 @@ class GestureController:
                         continue
 
             # Display the frame (FOR TESTING)
-            cv2.imshow("Frame", frame)
+            # cv2.imshow("Frame", frame)
 
             # Escape key (FOR TESTING)
-            if cv2.waitKey(self.delay) & 0xFF == ord("q"):
-                break
+            # if cv2.waitKey(self.delay) & 0xFF == ord("q"):
+            #     break
 
             # Delay
-            # cv2.waitKey(self.delay)
+            cv2.waitKey(self.delay)
 
         cap.release()
         cv2.destroyAllWindows()
@@ -133,7 +151,7 @@ class GestureController:
                 if elapsed_time >= self.gesture_hold_time:
                     # Increase volume change rate based on elapsed time
                     change_rate = min(
-                        (elapsed_time - self.gesture_hold_time) * 2, 100
+                        (elapsed_time - self.gesture_hold_time) * 1.2, 100
                     )  # Adjust multiplier as needed
                     self.adjust_volume(action, change_rate)
                 else:
