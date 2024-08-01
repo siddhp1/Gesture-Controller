@@ -1,0 +1,13 @@
+{
+    "gesture_action_map": {
+        "palm": "playpause",
+        "fist": "playpause",
+        "like": "volumeup",
+        "dislike": "volumedown",
+        "one": "volumemute"
+    },
+    "gesture_hold_time": 1.0,
+    "confidence_threshold": 0.8,
+    "camera_index": 0,
+    "camera_frames_per_second": 15
+}
