@@ -7,6 +7,11 @@ import pyautogui
 import time
 import json
 import logging
+import warnings
+
+warnings.filterwarnings(
+    "ignore", category=UserWarning, message="SymbolDatabase.GetPrototype()"
+)
 
 
 class GestureController:
@@ -28,7 +33,9 @@ class GestureController:
 
     def load_resources(self):
         # Load TFLite model and allocate tensors
-        self.interpreter = tf.lite.Interpreter(model_path="model.tflite")
+        self.interpreter = tf.lite.Interpreter(
+            model_path="../models/HaGRID/FNN/model.tflite"
+        )
         self.interpreter.allocate_tensors()
 
         # Get input and output details
@@ -36,7 +43,9 @@ class GestureController:
         self.output_details = self.interpreter.get_output_details()
 
         # Load label encoder classes
-        le_classes = np.load("label_encoder_classes.npy", allow_pickle=True)
+        le_classes = np.load(
+            "../models/HaGRID/FNN/label_encoder_classes.npy", allow_pickle=True
+        )
         self.le = LabelEncoder()
         self.le.fit(le_classes)
 
@@ -119,13 +128,6 @@ class GestureController:
                         self.perform_action(gesture)
                     else:
                         continue
-
-            # Display the frame (FOR TESTING)
-            # cv2.imshow("Frame", frame)
-
-            # Escape key (FOR TESTING)
-            # if cv2.waitKey(self.delay) & 0xFF == ord("q"):
-            #     break
 
             # Delay
             cv2.waitKey(self.delay)
