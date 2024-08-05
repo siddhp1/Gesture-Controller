@@ -4,6 +4,10 @@
 # Dataset
 data/
 
+# Copies of models
+app/*.npy
+app/*.tflite
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

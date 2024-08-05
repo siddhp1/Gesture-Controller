@@ -1,11 +1,8 @@
-# ML Libraries
 import cv2
 import numpy as np
 import mediapipe as mp
 import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
-
-# Other
 import pyautogui
 import time
 import json
@@ -31,9 +28,7 @@ class GestureController:
 
     def load_resources(self):
         # Load TFLite model and allocate tensors
-        self.interpreter = tf.lite.Interpreter(
-            model_path="../models/HaGRID/FNN/model.tflite"
-        )
+        self.interpreter = tf.lite.Interpreter(model_path="model.tflite")
         self.interpreter.allocate_tensors()
 
         # Get input and output details
@@ -41,9 +36,7 @@ class GestureController:
         self.output_details = self.interpreter.get_output_details()
 
         # Load label encoder classes
-        le_classes = np.load(
-            "../models/HaGRID/FNN/label_encoder_classes.npy", allow_pickle=True
-        )
+        le_classes = np.load("label_encoder_classes.npy", allow_pickle=True)
         self.le = LabelEncoder()
         self.le.fit(le_classes)
 
@@ -177,7 +170,6 @@ class GestureController:
             pyautogui.press("volumedown", presses=step)
 
 
-# Runner function (for testing)
 if __name__ == "__main__":
     gesture_controller = GestureController("config.json")
     gesture_controller.start()
