@@ -18,11 +18,11 @@ class GestureController:
     def __init__(self, config_path):
         self.config_path = config_path
 
-        # Call function to load sklearn and mp resources
-        self.load_resources()
-
         # Call function to load the config file
         self.load_config()
+
+        # Call function to load sklearn and mp resources
+        self.load_resources()
 
         # Logging
         logging.basicConfig(filename="gesture_controller.log", level=logging.INFO)
@@ -33,9 +33,7 @@ class GestureController:
 
     def load_resources(self):
         # Load TFLite model and allocate tensors
-        self.interpreter = tf.lite.Interpreter(
-            model_path="../models/HaGRID/FNN/model.tflite"
-        )
+        self.interpreter = tf.lite.Interpreter(model_path=self.model_path)
         self.interpreter.allocate_tensors()
 
         # Get input and output details
@@ -43,9 +41,7 @@ class GestureController:
         self.output_details = self.interpreter.get_output_details()
 
         # Load label encoder classes
-        le_classes = np.load(
-            "../models/HaGRID/FNN/label_encoder_classes.npy", allow_pickle=True
-        )
+        le_classes = np.load(self.label_path, allow_pickle=True)
         self.le = LabelEncoder()
         self.le.fit(le_classes)
 
@@ -60,6 +56,10 @@ class GestureController:
         # Load the json into a dictionary
         with open(self.config_path, "r") as config_file:
             config = json.load(config_file)
+
+        # Load paths of model and label files
+        self.model_path = config.get("model_path", "model.tflite")
+        self.label_path = config.get("label_path", "label_encoder_classes.npy")
 
         # Extract values, and provide defaults if not found
         self.gesture_action_map = config.get(
@@ -164,7 +164,6 @@ class GestureController:
                 time.sleep(self.gesture_hold_time)  # Delay between actions
 
     def adjust_volume(self, action, change_rate):
-        # Adjust the volume using pyautogui (or any other method) based on the change rate
         step = int(change_rate)
         if action == "volumeup":
             pyautogui.press("volumeup", presses=step)

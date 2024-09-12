@@ -1,4 +1,6 @@
 {
+    "model_path": "model.tflite",
+    "label_path": "label_encoder_classes.npy",
     "gesture_action_map": {
         "palm": "playpause",
         "fist": "playpause",
