@@ -3,6 +3,10 @@ import time
 
 
 class Command:
+    """
+    Command management.
+    """
+
     def __init__(self, gesture_action_map: dict, gesture_hold_time: float) -> None:
         """
         Creates an instance of the command manager.

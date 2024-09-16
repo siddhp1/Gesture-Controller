@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gesture Controller</title>
+
+    <!-- Tailwind Play CDN for dev -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom styles -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+
+    <!-- Tailwind CSS -->
+    <!-- <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/tailwind.css') }}"
+    /> -->
+
+    <!-- JavaScript -->
+    <script
+      src="{{ url_for('static', filename='scripts/index.js') }}"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col items-center bg-slate-50">
+      <h1 class="font-inter text-5xl font-normal">Gesture Controller</h1>
+
+      <h1 class="font-inter text-xl font-medium mt-6 mb-2">Loop Controls</h1>
+      <div class="flex gap-4">
+        <button class="rounded-md px-2 py-1 bg-slate-300" onclick="startLoop()">
+          <p class="text-inter font-normal">Start Loop</p>
+        </button>
+        <button class="rounded-md px-2 py-1 bg-slate-300" onclick="stopLoop()">
+          <p class="text-inter font-normal">Stop Loop</p>
+        </button>
+        <button
+          class="rounded-md px-2 py-1 bg-slate-300"
+          onclick="restartLoop()"
+        >
+          <p class="text-inter font-normal">Restart Loop</p>
+        </button>
+      </div>
+      <p id="message" class="mt-2">Loop stopped!.</p>
+    </div>
+  </body>
+</html>

@@ -3,44 +3,58 @@ Program entry point.
 """
 
 import warnings
-from modules.camera import Camera
-from modules.command import Command
-from modules.config import Config
-from modules.model import Model
+from flask import Flask, jsonify, render_template
+
+from controller import Loop
 
 # Clear terminal output and add logging after
 warnings.filterwarnings("ignore", category=UserWarning, message="SymbolDatabase.GetPrototype()")
 
+app = Flask(__name__)
+loop = Loop()
 
-def main() -> None:
+
+@app.route("/")
+def index():
     """
-    Runs the program.
+    Render the HTML page with buttons.
     """
 
-    config = Config(config_path="config.json")
-    model = Model(
-        model_path=config.get_value("model_path"), label_path=config.get_value("label_path")
-    )
-    camera = Camera(
-        config.get_value("camera_index"), 1000 // config.get_value("camera_frames_per_second")
-    )
-    command = Command(config.get_value("gesture_action_map"), config.get_value("gesture_hold_time"))
+    return render_template("index.html")
 
-    confidence_threshold = config.get_value("confidence_threshold")
 
-    try:
-        while camera.is_opened():
-            pred = model.make_prediction(camera.read_frame()[1])
+@app.route("/start-loop", methods=["POST"])
+def start_loop():
+    """
+    Start the background loop.
+    """
 
-            # Perform action
-            if pred:
-                if pred.confidence >= confidence_threshold:
-                    command.perform_action(pred.gesture)
+    response = loop.start_loop()
+    print(response)
+    return jsonify({"message": response})
 
-            camera.wait()
-    finally:
-        camera.release()
+
+@app.route("/stop-loop", methods=["POST"])
+def stop_loop():
+    """
+    Stop the background loop.
+    """
+
+    response = loop.stop_loop()
+    print(response)
+    return jsonify({"message": response})
+
+
+@app.route("/restart-loop", methods=["POST"])
+def restart_loop():
+    """
+    Restart the background loop.
+    """
+
+    response = loop.restart_loop()
+    print(response)
+    return jsonify({"message": response})
 
 
 if __name__ == "__main__":
-    main()
+    app.run(debug=True)
