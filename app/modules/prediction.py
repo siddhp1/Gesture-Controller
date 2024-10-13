@@ -10,7 +10,6 @@ class Prediction:
         """
         Initialize a prediction instance.
         """
-
         # Checks that gesture is of type string
         if not isinstance(gesture, str):
             raise ValueError("Gesture must be a string.")

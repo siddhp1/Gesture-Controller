@@ -14,7 +14,6 @@ class Model:
         """
         Creates an instance of the model.
         """
-
         # Load interpreter
         self.interpreter = tf.lite.Interpreter(model_path)
         self.interpreter.allocate_tensors()
@@ -37,7 +36,6 @@ class Model:
         """
         Makes a prediction from a frame.
         """
-
         # Process with mediapipe
         result = self.hands.process(frame)
 

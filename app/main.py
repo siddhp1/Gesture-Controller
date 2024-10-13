@@ -3,9 +3,9 @@ Program entry point.
 """
 
 import warnings
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, Response
 
-from controller import Loop
+from modules.controller import Loop
 
 # Clear terminal output and add logging after
 warnings.filterwarnings("ignore", category=UserWarning, message="SymbolDatabase.GetPrototype()")
@@ -15,7 +15,7 @@ loop = Loop()
 
 
 @app.route("/")
-def index():
+def index() -> str:
     """
     Render the HTML page with buttons.
     """
@@ -24,7 +24,7 @@ def index():
 
 
 @app.route("/start-loop", methods=["POST"])
-def start_loop():
+def start_loop() -> Response:
     """
     Start the background loop.
     """
@@ -35,7 +35,7 @@ def start_loop():
 
 
 @app.route("/stop-loop", methods=["POST"])
-def stop_loop():
+def stop_loop() -> Response:
     """
     Stop the background loop.
     """
@@ -46,7 +46,7 @@ def stop_loop():
 
 
 @app.route("/restart-loop", methods=["POST"])
-def restart_loop():
+def restart_loop() -> Response:
     """
     Restart the background loop.
     """

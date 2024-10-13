@@ -11,7 +11,6 @@ class Command:
         """
         Creates an instance of the command manager.
         """
-
         self.gesture_action_map = gesture_action_map
         self.gesture_hold_time = gesture_hold_time
         self.current_gesture = None
@@ -21,7 +20,6 @@ class Command:
         """
         Performs an action.
         """
-
         action = self.gesture_action_map.get(gesture)
 
         # Check if the gesture is one of the volume controls
@@ -54,7 +52,6 @@ class Command:
         """
         Adjusts volume.
         """
-
         step = int(change_rate)
         if action == "volumeup":
             pyautogui.press("volumeup", presses=step)

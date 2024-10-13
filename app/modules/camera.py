@@ -11,7 +11,6 @@ class Camera:
         """
         Initialize the camera.
         """
-
         self.camera_index = camera_index
         self.delay = delay
         self.cap = cv2.VideoCapture(self.camera_index)
@@ -23,14 +22,12 @@ class Camera:
         """
         Checks if the camera is opened.
         """
-
         return self.cap.isOpened()
 
     def read_frame(self) -> "tuple[bool, np.ndarray]":
         """
         Read a frame from the capture.
         """
-
         ret, frame = self.cap.read()
         if ret:
             # Flip frame horizontally
@@ -46,7 +43,6 @@ class Camera:
         """
         Release the camera.
         """
-
         self.cap.release()
         cv2.destroyAllWindows()
 
@@ -54,5 +50,4 @@ class Camera:
         """
         Wait for the specified delay.
         """
-
         cv2.waitKey(self.delay)

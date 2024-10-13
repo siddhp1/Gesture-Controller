@@ -12,7 +12,6 @@ class Config:
         """
         Initialize the config instance.
         """
-
         self.config_path = config_path
         self.config_data = self._load_config()
 
@@ -20,7 +19,6 @@ class Config:
         """
         Load the configuration file into a dictionary.
         """
-
         if not os.path.exists(self.config_path):
             raise FileNotFoundError(f"Configuration file not found: {self.config_path}")
 
@@ -31,14 +29,12 @@ class Config:
         """
         Get a specific configuration value.
         """
-
         return self.config_data.get(key)
 
     def update_value(self, key: str, value: Union[str, float, int, dict]) -> None:
         """
         Update a configuration value in the dictionary and save it to the file.
         """
-
         self.config_data[key] = value
         self._save_config()
 
@@ -46,6 +42,5 @@ class Config:
         """
         Save the configuration data back to the file.
         """
-
         with open(self.config_path, "w") as config_file:
             json.dump(self.config_data, config_file, indent=4)
