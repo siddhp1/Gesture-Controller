@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "Inter";
+    src: url("../fonts/InterVariable.ttf") format("truetype"),
+      url("../fonts/InterVariable-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
