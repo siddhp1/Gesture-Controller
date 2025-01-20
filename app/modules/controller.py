@@ -28,9 +28,9 @@ class Loop:
             self.loop_active = True
             self.thread = threading.Thread(target=self.background_loop, args=(self.event,))
             self.thread.start()
-            return "Loop started!"
+            return "Controller started!"
         else:
-            return "Loop is already running!"
+            return "Controller is already running!"
 
     def stop_loop(self) -> str:
         if self.loop_active:
@@ -40,15 +40,13 @@ class Loop:
 
             # Set flag back to false
             self.event.clear()
-            return "Loop stopped!"
+            return "Controller stopped!"
         else:
-            return "Loop is not running!"
+            return "Controller is not running!"
 
     def restart_loop(self) -> None:
         self.stop_loop()
         return self.start_loop()
-
-    # needs some kind of error catching/destruction check stuff here
 
     def background_loop(self, stop: threading.Event) -> None:
         config = Config(config_path="config.json")

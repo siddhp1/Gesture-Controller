@@ -44,9 +44,7 @@ class Command:
             # Perform action with a delay for non-volume gestures
             if action:
                 pyautogui.press(action)
-
-                # this wil need to be changed to work universally
-                time.sleep(self.gesture_hold_time)  # Delay between actions
+                time.sleep(self.gesture_hold_time)
 
     def adjust_volume(self, action: str, change_rate: float) -> None:
         """
