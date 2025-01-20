@@ -1,8 +1,8 @@
 # Gesture Controller
 
-Gesture Controller is a cross-platform application for users to control media functions using hand gestures, with real-time camera capture and high-performance inference for responsive user actions. Built with Flask, Tensorflow, OpenCV and Mediapipe.
+Gesture Controller is a cross-platform application that allows users to control media functions using hand gestures, with real-time camera capture and high-performance inference for responsive user actions. Built with Flask, Tensorflow, OpenCV and Mediapipe.
 
-Features a dense neural networked trained to 97% validation accuracy on landmark data collected from the [HaGRID (512px) dataset](https://github.com/hukenovs/hagrid).
+Features a dense neural network trained to 97% validation accuracy on landmark data collected from the [HaGRID (512px) dataset](https://github.com/hukenovs/hagrid).
 
 ## Installation
 
@@ -25,7 +25,7 @@ Features a dense neural networked trained to 97% validation accuracy on landmark
 1. **Run application**
 
     ```bash
-    $ python -m main
+    $ python3 -m main
     ```
 
 2. **Open GUI**
