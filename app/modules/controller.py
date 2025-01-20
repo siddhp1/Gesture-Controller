@@ -14,7 +14,6 @@ class Loop:
         """
         Initialize.
         """
-
         self.loop_active = False
         self.event = threading.Event()
         self.thread = None
@@ -23,7 +22,6 @@ class Loop:
         """
         Function to start the loop.
         """
-
         if self.thread is None or not self.thread.is_alive():
             self.loop_active = True
             self.thread = threading.Thread(target=self.background_loop, args=(self.event,))
@@ -33,6 +31,9 @@ class Loop:
             return "Controller is already running!"
 
     def stop_loop(self) -> str:
+        """
+        Function to stop the loop.
+        """
         if self.loop_active:
             self.loop_active = False
             self.event.set()
@@ -45,10 +46,16 @@ class Loop:
             return "Controller is not running!"
 
     def restart_loop(self) -> None:
+        """
+        Function to restart the loop.
+        """
         self.stop_loop()
         return self.start_loop()
 
     def background_loop(self, stop: threading.Event) -> None:
+        """
+        Loop functionality.
+        """
         config = Config(config_path="config.json")
         model = Model(
             model_path=config.get_value("model_path"), label_path=config.get_value("label_path")
