@@ -1,37 +1,44 @@
 # Gesture Controller
 
-Gesture Controller is a cross-platform application that allows users to control media functions using hand gestures, with real-time camera capture and high-performance inference for responsive user actions. Built with Flask, Tensorflow, OpenCV and Mediapipe.
+<p align="center"><img width="600" alt="Thumbnail Image of Gesture Controller" src="./Gesture-Controller.png"></p>
 
-Features a dense neural network trained to 97% validation accuracy on landmark data collected from the [HaGRID (512px) dataset](https://github.com/hukenovs/hagrid).
+A deep learning powered multimedia controller operated by hand gestures.
 
-## Installation
+The application is built using Flask, Python, OpenCV, Mediapipe, and TailwindCSS, with a TensorFlow-trained model and data collected via Mediapipe.
+
+## About
+
+The model consists of two dense layers with ReLU activation, followed by a fully-connected dense layer with softmax activation. It uses the Adam optimizer and sparse categorical cross-entropy as the loss function. The model achieves a validation accuracy of 97%. 
+
+Landmark data was collected from the [HaGRID (512px)](https://github.com/hukenovs/hagrid) dataset.
+
+## Setup
 
 1. **Clone the repository:**
     ```bash
-    $ git clone https://github.com/siddhp1/Gesture-Controller.git
-    $ cd Gesture-Controller/app
+    git clone https://github.com/siddhp1/Gesture-Controller.git
+    cd Gesture-Controller/app
     ```
 
 2. **Create environment and install dependencies:**
 
     ```bash
-    $ python3 -m venv venv # Use Python 3.12
-    $ source venv/bin/activate # On Windows use `venv\Scripts\activate`
-    $ pip install -r requirements.txt
+    python -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
     ```
 
 ## Usage
 
-1. **Run application**
-
+1. **Run application:**
     ```bash
-    $ python3 -m main
+    python -m main
     ```
 
-2. **Open GUI**
+2. **Open GUI:**
 
     Go to `http://localhost:5000` in your web browser.
 
-# License
+## License
 
 This project is licensed under the MIT License.
